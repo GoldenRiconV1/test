@@ -7,12 +7,14 @@
 
 SRC	=	main.c	\
 		parser.c	\
+		utils/my_strcmp.c	\
+		utils/my_strlen.c	\
+		utils/my_strcpy.c	\
+		utils/my_arraylen.c	\
+		flags/handle_array.c	\
+		flags/basic_ls.c	\
 
 OBJ	=	$(SRC:.c=.o)
-
-# LDFLAGS += -lmy -L./lib/my
-
-# CFLAGS += -I./include
 
 CC = epiclang
 NAME =	my_ls

@@ -8,27 +8,36 @@
 #include "include/my.h"
 #include <stdio.h>
 
-int parser(int argc, char **argv, flags_t *flag)
+static void flags_asigment(flags_t *flag)
 {
     flag->a_flags = 0;
     flag->l_flags = 0;
     flag->R_flags = 0;
     flag->d_flags = 0;
     flag->t_flags = 0;
+    flag->has_flags = 0;
+}
 
+void parser(int argc, char **argv, flags_t *flag)
+{
+    flags_asigment(flag);
     for (int i = 1; i < argc; i++) {
-        if (argv[i] == "-a")
+        if (my_strcmp(argv[i], "-a") != 0 && my_strcmp(argv[i], "-l") != 0
+            && my_strcmp(argv[i], "-R") != 0 && my_strcmp(argv[i], "-d") != 0
+            && my_strcmp(argv[i], "-t") != 0)
+            return;
+        if (my_strcmp(argv[i], "-a") == 0)
             flag->a_flags = 1;
-        if (argv[i] == "-l")
+        if (my_strcmp(argv[i], "-l") == 0)
             flag->l_flags = 1;
-        if (argv[i] == "-R")
+        if (my_strcmp(argv[i], "-R") == 0)
             flag->R_flags = 1;
-        if (argv[i] == "-d")
+        if (my_strcmp(argv[i], "-d") == 0)
             flag->d_flags = 1;
-        if (argv[i] == "-t")
+        if (my_strcmp(argv[i], "-t") == 0)
             flag->t_flags = 1;
     }
-    printf("a : %i, l : %i, R : %i, d : %i, t : %i\n", flag->a_flags,
-        flag->l_flags, flag->R_flags, flag->d_flags, flag->t_flags);
-    return 0;
+    if (flag->a_flags == 1 || flag->l_flags == 1 || flag->R_flags == 1
+        || flag->d_flags == 1 || flag->t_flags == 1)
+        flag->has_flags = 1;
 }
