@@ -8,7 +8,7 @@
 #include "include/my.h"
 #include <stdio.h>
 
-static void flags_asigment(flags_t *flag)
+void flags_asigment(flags_t *flag)
 {
     flag->a_flags = 0;
     flag->l_flags = 0;
@@ -20,7 +20,6 @@ static void flags_asigment(flags_t *flag)
 
 void parser(int argc, char **argv, flags_t *flag)
 {
-    flags_asigment(flag);
     for (int i = 1; i < argc; i++) {
         if (my_strcmp(argv[i], "-a") != 0 && my_strcmp(argv[i], "-l") != 0
             && my_strcmp(argv[i], "-R") != 0 && my_strcmp(argv[i], "-d") != 0

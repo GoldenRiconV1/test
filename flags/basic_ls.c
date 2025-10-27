@@ -16,9 +16,9 @@ static char **create_result_array(char **array)
     int j = 0;
 
     while (i < my_arraylen(array)) {
-        i++;
         if (array[i][0] == '.')
             start_index += 1;
+        i++;
     }
     i = 0;
     size_array = malloc(sizeof(char *) * (my_arraylen(array) - start_index));

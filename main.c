@@ -10,6 +10,7 @@
 int main(int argc, char **argv)
 {
     flags_t flag;
+    flags_asigment(&flag);
     char **array;
     char **array2;
 

@@ -26,6 +26,7 @@ typedef struct flags_s {
 } flags_t;
 
 void parser(int argc, char **argv, flags_t *flag);
+void flags_asigment(flags_t *flag);
 char **handle_array(void);
 char **basic_ls_array(flags_t *flag, char **array);
 
