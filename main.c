@@ -1,18 +1,19 @@
 /*
 ** EPITECH PROJECT, 2025
-** G-CPE-101-LYN-1-1-myprintf-18
+** G-PSU-100-LYN-1-1-myls-7
 ** File description:
 ** main.c
 */
 
 #include "include/my.h"
 
-int main(void)
+int main(int argc, char **argv)
 {
-    int age = 10;
-    int *pointeurSurAge = &age;
+    flags_t flag;
 
-    printf("ceci est un test %y.\n");
-    my_printf("ceci est un test %y.\n");
+    if (argc > 5)
+        return 84;
+    if (argc > 1)
+        parser(argc, argv, &flag);
     return 0;
 }

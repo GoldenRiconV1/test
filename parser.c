@@ -1,146 +1,34 @@
 /*
 ** EPITECH PROJECT, 2025
-** G-CPE-101-LYN-1-1-myprintf-18
+** G-PSU-100-LYN-1-1-myls-7
 ** File description:
-** parser
+** parser.c
 */
 
 #include "include/my.h"
+#include <stdio.h>
 
-// %[flags][width][.precision][length]specifier
-
-static int get_flag_value(char c)
+int parser(int argc, char **argv, flags_t *flag)
 {
-    if (c == '-')
-        return FLAG_MINUS;
-    if (c == '+')
-        return FLAG_PLUS;
-    if (c == ' ')
-        return FLAG_SPACE;
-    if (c == '0')
-        return FLAG_ZERO;
-    if (c == '#')
-        return FLAG_HASH;
+    flag->a_flags = 0;
+    flag->l_flags = 0;
+    flag->R_flags = 0;
+    flag->d_flags = 0;
+    flag->t_flags = 0;
+
+    for (int i = 1; i < argc; i++) {
+        if (argv[i] == "-a")
+            flag->a_flags = 1;
+        if (argv[i] == "-l")
+            flag->l_flags = 1;
+        if (argv[i] == "-R")
+            flag->R_flags = 1;
+        if (argv[i] == "-d")
+            flag->d_flags = 1;
+        if (argv[i] == "-t")
+            flag->t_flags = 1;
+    }
+    printf("a : %i, l : %i, R : %i, d : %i, t : %i\n", flag->a_flags,
+        flag->l_flags, flag->R_flags, flag->d_flags, flag->t_flags);
     return 0;
-}
-
-static int parse_flags(const char *format, int *i, format_spec_t *spec)
-{
-    int count = 0;
-    int flag = get_flag_value(format[*i]);
-
-    while (flag) {
-        spec->flags |= flag;
-        (*i)++;
-        count++;
-        flag = get_flag_value(format[*i]);
-    }
-    return count;
-}
-
-// Width : number or *
-// If *, the width is given as an int argument
-static int parse_width(const char *format, int *i,
-    format_spec_t *spec, va_list args)
-{
-    if (format[*i] == '*') {
-        spec->width = va_arg(args, int);
-        (*i)++;
-        return 1;
-    } else {
-        spec->width = 0;
-        while (format[*i] >= '0' && format[*i] <= '9') {
-            spec->width = spec->width * 10 + (format[*i] - '0');
-            (*i)++;
-        }
-    }
-    return 0;
-}
-
-// Precision : .number or .*
-// If .*, the precision is given as an int argument
-static int parse_precision(const char *format, int *i,
-    format_spec_t *spec, va_list args)
-{
-    if (format[*i] != '.')
-        return 0;
-    (*i)++;
-    spec->has_precision = 1;
-    if (format[*i] == '*') {
-        spec->precision = va_arg(args, int);
-        (*i)++;
-        return 1;
-    } else {
-        spec->precision = 0;
-        while (format[*i] >= '0' && format[*i] <= '9') {
-            spec->precision = spec->precision * 10 + (format[*i] - '0');
-            (*i)++;
-        }
-    }
-    return 1;
-}
-
-static int parse_h_length(const char *format, int *i, format_spec_t *spec)
-{
-    spec->length = 'h';
-    (*i)++;
-    if (format[*i] != 'h')
-        return 1;
-    spec->length = 'H';
-    (*i)++;
-    return 2;
-}
-
-static int parse_l_length(const char *format, int *i, format_spec_t *spec)
-{
-    spec->length = 'l';
-    (*i)++;
-    if (format[*i] != 'l')
-        return 1;
-    spec->length = 'L';
-    (*i)++;
-    return 2;
-}
-
-static int parse_single_length(const char *format, int *i, format_spec_t *spec)
-{
-    if (format[*i] == 'L' || format[*i] == 'j' ||
-        format[*i] == 'z' || format[*i] == 't') {
-        spec->length = format[*i];
-        (*i)++;
-        return 1;
-    }
-    return 0;
-}
-
-static int parse_length(const char *format, int *i, format_spec_t *spec)
-{
-    if (format[*i] == 'h')
-        return parse_h_length(format, i, spec);
-    if (format[*i] == 'l')
-        return parse_l_length(format, i, spec);
-    return parse_single_length(format, i, spec);
-}
-
-// Main parsing function
-int parse_format_spec(const char *format, int *i,
-    format_spec_t *spec, va_list args)
-{
-    int count = 0;
-
-    spec->flags = 0;
-    spec->width = 0;
-    spec->precision = 0;
-    spec->length = 0;
-    spec->has_precision = 0;
-    count += parse_flags(format, i, spec);
-    count += parse_width(format, i, spec, args);
-    count += parse_precision(format, i, spec, args);
-    count += parse_length(format, i, spec);
-    if (format[*i] == '\0')
-        return -1;
-    spec->specifier = format[*i];
-    (*i)++;
-    count++;
-    return count;
 }
