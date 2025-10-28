@@ -7,11 +7,19 @@
 
 SRC	=	main.c	\
 		parser.c	\
-		utils/my_strcmp.c	\
-		utils/my_strlen.c	\
-		utils/my_strcpy.c	\
+		utils/char_to_lower.c	\
+		utils/lexicographic_cmp.c	\
+		utils/mini_printf.c	\
 		utils/my_arraylen.c	\
+		utils/my_put_nbr.c	\
+		utils/my_putchar.c	\
+		utils/my_putstr_err.c	\
+		utils/my_putstr.c	\
+		utils/my_strcmp.c	\
+		utils/my_strcpy.c	\
+		utils/my_strlen.c	\
 		flags/handle_array.c	\
+		flags/handle_flags.c	\
 		flags/basic_ls.c	\
 
 OBJ	=	$(SRC:.c=.o)

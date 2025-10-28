@@ -10,15 +10,13 @@
 int main(int argc, char **argv)
 {
     flags_t flag;
-    flags_asigment(&flag);
+    has_file_flag_t has_file_flag;
     char **array;
-    char **array2;
 
-    if (argc > 1)
-        parser(argc, argv, &flag);
+    flags_asigment(&flag, &has_file_flag);
     array = handle_array();
-    array2 = basic_ls_array(&flag, array);
-    printf("%s %s %s %s\n",
-        array[0], array[1], array[2], array[3]);
+    if (argc > 1)
+        parser(argc, argv, &flag, &has_file_flag);
+    handle_flags(&flag, &has_file_flag, array);
     return 0;
 }

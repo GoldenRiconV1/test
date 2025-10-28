@@ -60,7 +60,7 @@ static char **sort_array(char **array, int len_array)
     for (int i = 1; i < len_array; i++) {
         elem = array[i];
         j = i - 1;
-        while (j >= 0 && my_strcmp(array[j], elem) > 0) {
+        while (j >= 0 && lexicographic_cmp(array[j], elem) > 0) {
             array[j + 1] = array[j];
             j = j - 1;
         }

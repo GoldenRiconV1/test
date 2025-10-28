@@ -9,25 +9,25 @@
 
 static char **create_result_array(char **array)
 {
-    int start_index = 0;
+    int s_index = 0;
     char **size_array;
-    int str_len = 0;
-    int i = 0;
     int j = 0;
 
-    while (i < my_arraylen(array)) {
+    for (int i = 0; array[i] != NULL; i++) {
         if (array[i][0] == '.')
-            start_index += 1;
-        i++;
+            s_index++;
     }
-    i = 0;
-    size_array = malloc(sizeof(char *) * (my_arraylen(array) - start_index));
-    while (j <= i) {
-        for (int k = start_index; array[k][j] != '\0'; k++)
-            size_array[j] = malloc(sizeof(char) * k);
-        j++;
+    size_array = malloc(sizeof(char *) * (my_arraylen(array) - s_index + 1));
+    if (size_array == NULL)
+        return NULL;
+    for (int i = 0; i < my_arraylen(array); i++) {
+        if (array[i][0] != '.') {
+            size_array[j] = malloc(sizeof(char) * (my_strlen(array[i]) + 1));
+            my_strcpy(size_array[j], array[i]);
+            j++;
+        }
     }
-    size_array[my_arraylen(array) - start_index] = NULL;
+    size_array[j] = NULL;
     return size_array;
 }
 
@@ -35,8 +35,9 @@ char **basic_ls_array(flags_t *flag, char **array)
 {
     char **result_array;
 
-    if (!(flag->a_flags)) {
+    if (flag->a_flags == 0) {
         result_array = create_result_array(array);
+        return result_array;
     }
-    return result_array;
+    return array;
 }
