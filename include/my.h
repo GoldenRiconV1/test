@@ -1,0 +1,126 @@
+/*
+** EPITECH PROJECT, 2025
+** myls
+** File description:
+** my.h
+*/
+
+#ifndef MY_H_
+    #define MY_H_
+    #include <SFML/Audio.h>
+    #include <SFML/Graphics.h>
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <stdbool.h>
+    #include <time.h>
+    #include <string.h>
+    #include <unistd.h>
+    #include <stdarg.h>
+    #define GAME_WIDTH 800
+    #define GAME_HEIGHT 600
+    #define DUCK_WIDTH 11220
+    #define DUCK_HEIGHT 110
+    #define DUCK_STATES 102
+    #define REFRESH_SECONDS 0.02
+
+typedef enum game_state_e
+{
+    START_MENU,
+    PLAYING,
+    PAUSED,
+    LOOSE
+} game_state_t;
+
+typedef struct duck_s {
+    sfSprite *duck_sprite;
+    sfTexture *duck_texture;
+    float duck_speed;
+    sfVector2f duck_pos;
+    sfIntRect duck_rect;
+} duck_t;
+
+typedef struct btn_s {
+    sfSprite *start_btn_sprite;
+    sfTexture *start_btn_texture;
+    sfSprite *restart_btn_sprite;
+    sfTexture *restart_btn_texture;
+    sfSprite *exit_btn_sprite;
+    sfTexture *exit_btn_texture;
+} btn_t;
+
+typedef struct mouse_s {
+    sfSprite *cursor_sprite;
+    sfTexture *cursor_texture;
+    sfVector2i mouse_pos;
+    bool mouse_clicked;
+    bool escape_clicked;
+} mouse_t;
+
+typedef struct score_s {
+    int score;
+    sfText *score_text;
+    sfFont *font;
+    char *score_text_str;
+} score_t;
+
+typedef struct game_s
+{
+    game_state_t state;
+    sfRenderWindow *window;
+    sfSprite *background_sprite;
+    sfTexture *background_texture;
+    sfClock *clock;
+
+    duck_t *d; //duck
+    btn_t *btn; //button
+    mouse_t *m; //mouse
+    score_t *s; //score
+
+    sfSound *pop_sound;
+    sfSoundBuffer *pop_sound_buffer;
+    sfMusic *music;
+} game_t;
+
+game_t *create_game(void);
+void destroy_game(game_t *game);
+void game_loop(game_t *game);
+void manage_events(game_t *game);
+void init(game_t *game);
+
+bool create_background(game_t *game);
+bool create_clock(game_t *game);
+bool create_duck(game_t *game);
+void reset_duck(game_t *game);
+float get_elapsed_time(game_t *game);
+
+bool create_text_score(game_t *game);
+bool create_start_btn(game_t *game);
+bool create_restart_btn(game_t *game);
+bool create_exit_btn(game_t *game);
+void check_click_btn(game_t *game);
+bool create_cursor(game_t *game);
+bool create_sound_pop(game_t *game);
+bool create_music(game_t *game);
+
+void start_menu(game_t *game);
+void loose_menu(game_t *game);
+void pause_menu(game_t *game);
+
+void handle_menu(game_t *game);
+void handle_play(game_t *game);
+void handle_duck(game_t *game);
+void handle_cursor(game_t *game);
+void handle_pop_sound(game_t *game);
+
+int my_strcmp(char const *s1, char const *s2);
+int my_putstr(char const *str);
+int my_putchar(char c);
+int my_put_nbr(int nb);
+int mini_printf(const char *format, ...);
+char *unsigned_int_to_str(unsigned int n);
+char *my_revstr(char *str);
+int my_strlen(char const *str);
+void my_format_score(char *dest, int score);
+char *my_strcpy(char *dest, char const *src);
+
+#endif
